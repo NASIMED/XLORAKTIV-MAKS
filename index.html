@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ХЛОРАКТИВ-MAKS — Инструкция по применению</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background: #f4f6fb;
+  }
+  header {
+    background: linear-gradient(135deg, #0d3b6e 0%, #1a6fb5 100%);
+    color: #fff;
+    padding: 28px 20px 20px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px; }
+  header p.subtitle { font-size: 0.95rem; opacity: 0.85; }
+  header .badge {
+    display: inline-block; margin-top: 10px;
+    background: rgba(255,255,255,0.18); border-radius: 20px;
+    padding: 3px 14px; font-size: 0.8rem;
+  }
+
+  /* Language switcher */
+  .lang-switcher {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 30px;
+    border: 2px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    outline: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .lang-btn .flag {
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+  .lang-btn:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.7);
+  }
+  .lang-btn.active {
+    background: #fff;
+    color: #0d3b6e;
+    border-color: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 18px 14px 40px; }
+  section {
+    background: #fff; border-radius: 12px;
+    margin-bottom: 18px; padding: 20px 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  h2 {
+    font-size: 1.1rem; font-weight: 700; color: #0d3b6e;
+    border-left: 4px solid #1a6fb5; padding-left: 10px; margin-bottom: 14px;
+  }
+  h3 { font-size: 0.95rem; font-weight: 700; color: #1a6fb5; margin: 14px 0 6px; }
+  p { margin-bottom: 10px; }
+  ul, ol { padding-left: 22px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+
+  .table-wrap { overflow-x: auto; margin: 10px 0 6px; border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 380px; }
+  thead tr { background: #0d3b6e; color: #fff; }
+  thead th { padding: 9px 10px; text-align: center; font-weight: 600; line-height: 1.3; }
+  tbody tr:nth-child(even) { background: #eef3fb; }
+  tbody tr:nth-child(odd) { background: #fff; }
+  tbody td { padding: 8px 10px; border-bottom: 1px solid #dde4f0; vertical-align: top; text-align: center; }
+  tbody td:first-child { text-align: left; }
+  tfoot td { padding: 6px 10px; font-size: 0.78rem; color: #555; background: #f0f4fb; font-style: italic; }
+
+  .warn { background: #fff8e1; border-left: 4px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; }
+  .warn strong { color: #b45309; }
+  .info-box { background: #e8f4fd; border-left: 4px solid #1a6fb5; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 0.9rem; }
+  .danger { background: #fff0f0; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; }
+  .danger strong { color: #c53030; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tab-btn {
+    background: #eef3fb; border: none; border-radius: 20px;
+    padding: 6px 14px; font-size: 0.82rem; cursor: pointer;
+    color: #0d3b6e; font-weight: 600; transition: background 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover { background: #1a6fb5; color: #fff; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Language content visibility */
+  [data-ru] { display: block; }
+  [data-uz] { display: none; }
+  body.uz [data-ru] { display: none; }
+  body.uz [data-uz] { display: block; }
+  /* inline spans */
+  span[data-ru] { display: inline; }
+  span[data-uz] { display: none; }
+  body.uz span[data-ru] { display: none; }
+  body.uz span[data-uz] { display: inline; }
+
+  footer { text-align: center; padding: 20px; font-size: 0.78rem; color: #888; }
+  @media (max-width: 480px) {
+    header h1 { font-size: 1.4rem; }
+    section { padding: 16px 12px; }
+    .lang-btn { padding: 7px 14px; font-size: 0.82rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ХЛОРАКТИВ-MAKS / XLORAKTIV-MAKS</h1>
+  <p class="subtitle">
+    <span data-ru>Дезинфицирующее средство</span>
+    <span data-uz>Dezinfeksiyalovchi vosita</span>
+  </p>
+  <div class="badge">ГОСТ Р 58151.1-2018 · ООО «NASIMED» · Узбекистан, 2026</div>
+
+  <div class="lang-switcher">
+    <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')" spellcheck="false">RU</button>
+    <button class="lang-btn" id="btn-uz" onclick="setLang('uz')" spellcheck="false">UZ</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Section 1 -->
+  <section>
+    <h2>
+      <span data-ru>1. Общие положения</span>
+      <span data-uz>1. Umumiy qoidalar</span>
+    </h2>
+
+    <div data-ru>
+      <p><strong>«ХЛОРАКТИВ-MAKS»</strong> содержит натриевую соль дихлоризоциануровой кислоты (Na-соль ДХИЦК) — <strong>89%</strong>.</p>
+      <h3>Формы выпуска</h3>
+      <ul>
+        <li><strong>Таблетки</strong> по 3,3 г — при растворении выделяют 1,5 г активного хлора</li>
+        <li><strong>Гранулы</strong> (1 мерная ложка = 3 г)</li>
+      </ul>
+      <p>Содержание активного хлора в таблетках и гранулах: <strong>50–56%</strong>. Расфасованы в полимерные ёмкости 0,03–5,0 кг.</p>
+      <div class="info-box">
+        <strong>Срок годности:</strong> в запечатанной упаковке — <strong>3 года</strong> · рабочих растворов — не более <strong>3 суток</strong>
+      </div>
+      <p>Водные растворы прозрачны, с возможной лёгкой опалесценцией, имеют запах хлора. Не портят поверхности из дерева, стекла, полимерных материалов, посуду, игрушки, изделия из коррозионностойких металлов, стекла, резин и пластмасс.</p>
+      <h3>Токсичность (ГОСТ 12.1.007-76)</h3>
+      <ul>
+        <li>При введении в желудок — 3-й класс (умеренно опасные)</li>
+        <li>При нанесении на кожу — 4-й класс (малоопасные)</li>
+        <li>В виде аэрозоля — 3-й класс (умеренно опасные, раздражение дыхательных путей)</li>
+      </ul>
+      <h3>Антимикробное действие</h3>
+      <p>Активен против: грамположительных и грамотрицательных бактерий, микобактерий туберкулёза, вирусов (гепатиты, полиомиелит, ВИЧ, Covid-19), грибов (кандида, дерматофиты), возбудителей сибирской язвы (включая споровую форму), чумы, холеры.</p>
+      <h3>Назначение</h3>
+      <p>Дезинфекция в виде <strong>растворов</strong>: поверхности помещений, мебель, сантехника, бельё, посуда, игрушки, предметы ухода за больными, медицинский инструментарий, биологические выделения.</p>
+      <p>В виде <strong>гранул</strong> (без разведения): дезинфекция жидких выделений — мокрота, моча, фекалии, кровь, рвотные массы, остатки пищи.</p>
+      <p>Применяется в ЛПУ, школах, детских учреждениях, на транспорте, предприятиях общественного питания, гостиницах, банях, салонах красоты, бассейнах, а также в быту.</p>
+    </div>
+
+    <div data-uz>
+      <p><strong>«XLORAKTIV-MAKS»</strong> tarkibida dixloroizosian kislotasining natriy tuzi (Na-DXITSK) — <strong>89%</strong> mavjud.</p>
+      <h3>Chiqarish shakllari</h3>
+      <ul>
+        <li><strong>Tabletkalar</strong> 3,3 g — eritilganda 1,5 g faol xlor ajratadi</li>
+        <li><strong>Granulalar</strong> (1 o'lchov qoshiq = 3 g)</li>
+      </ul>
+      <p>Tabletka va granulalardagi faol xlor miqdori: <strong>50–56%</strong>. 0,03–5,0 kg hajmli polimer idishlarda qadoqlanadi.</p>
+      <div class="info-box">
+        <strong>Yaroqlilik muddati:</strong> yopiq qadoqda — <strong>3 yil</strong> · ish eritmalari — <strong>3 sutkadan</strong> ko'p emas
+      </div>
+      <p>Suvli eritmalar tiniq, engil opalestsensiya mumkin, xlor hidi bor. Yog'och, shisha, polimer materiallar, idish-tovoq, o'yinchoq, korroziyaga chidamli metalllar, rezina va plastmassadan yasalgan buyumlarni buzilmaydi.</p>
+      <h3>Toksiklik (GOST 12.1.007-76)</h3>
+      <ul>
+        <li>Me'daga kiritilganda — 3-sinf (o'rtacha xavfli)</li>
+        <li>Teriga teganda — 4-sinf (kam xavfli)</li>
+        <li>Aerozol shaklida — 3-sinf (nafas yo'llarini qo'zg'atadi)</li>
+      </ul>
+      <h3>Antimikrob ta'siri</h3>
+      <p>Quyidagilarga qarshi faol: gram-musbat va gram-manfiy bakteriyalar, sil mikobakteryalari, viruslar (gepatit, poliomielit, OIV, Covid-19), zamburug'lar (kandida, dermatofitlar), sibirka yarasi (spora shakli bilan), vabo, o'lat.</p>
+      <h3>Maqsadi</h3>
+      <p><strong>Eritma</strong> shaklida: xona yuzalari, mebel, sanitariya texnikasi, kiyim-kechak, idish-tovoq, o'yinchoqlar, bemorlarni parvarish buyumlari, tibbiy asboblar, biologik ajratmalar.</p>
+      <p><strong>Granula</strong> shaklida (suyultirmasdan): suyuq ajratmalar — balg'am, siydik, najaslar, qon, qusish, oziq-ovqat qoldiqlari.</p>
+      <p>Tibbiy muassasalar, maktablar, bolalar muassasalari, transport, umumiy ovqatlanish korxonalari, mehmonxona, hammom, go'zallik salonlari, suzish havzalari va maishiy hayotda qo'llaniladi.</p>
+    </div>
+  </section>
+
+  <!-- Section 2 -->
+  <section>
+    <h2>
+      <span data-ru>2. Приготовление рабочих растворов</span>
+      <span data-uz>2. Ish eritmasini tayyorlash</span>
+    </h2>
+
+    <div data-ru>
+      <p>Растворять в пластмассовых, полипропиленовых, эмалированных или стеклянных ёмкостях в водопроводной воде (лёгкое помешивание).</p>
+      <h3>Таблица 1 — Приготовление рабочих растворов</h3>
+    </div>
+    <div data-uz>
+      <p>Plastik, polipropilen, emaliran yoki shisha idishlarda suv quvuri suvida eritiladi (engil aralashtirib).</p>
+      <h3>1-jadval — Ish eritmasini tayyorlash</h3>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span data-ru>Активный хлор, %</span><span data-uz>Faol xlor, %</span></th>
+            <th><span data-ru>Таблеток / мерных ложек</span><span data-uz>Tabletka / o'lchov qoshiq</span></th>
+            <th><span data-ru>Воды, л</span><span data-uz>Suv, l</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0,015</td><td>1</td><td>10,0</td></tr>
+          <tr><td>0,03</td><td>2</td><td>10,0</td></tr>
+          <tr><td>0,06</td><td>4</td><td>10,0</td></tr>
+          <tr><td>0,1</td><td>7</td><td>10,0</td></tr>
+          <tr><td>0,2</td><td>14</td><td>10,0</td></tr>
+          <tr><td>0,3</td><td>20</td><td>10,0</td></tr>
+          <tr><td>0,5</td><td>35</td><td>10,0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 3 -->
+  <section>
+    <h2>
+      <span data-ru>3. Применение</span>
+      <span data-uz>3. Qo'llash</span>
+    </h2>
+
+    <div data-ru>
+      <h3>Способы обработки объектов</h3>
+      <ul>
+        <li><strong>Сантехника</strong> (ванны, раковины, унитазы) — щёткой или мягкой тканью, смоченной в растворе. Расход: 150 мл/м² (протирание), 150–300 мл/м² (орошение). При особо опасных инфекциях — 300–500 мл/м². Промыть водой.</li>
+        <li><strong>Поверхности помещений, мебель</strong> — протирание 150 мл/м² или орошение 300 мл/м² (гидропульт) / 150 мл/м² (распылитель). Проветрить, промыть.</li>
+        <li><strong>Бельё</strong> — погружение вещь за вещью из расчёта 5 л/кг сухого белья, закрыть крышкой. После — стирка и полоскание.</li>
+        <li><strong>Посуда</strong> — полное погружение, закрыть крышкой. Промыть проточной водой до исчезновения запаха хлора.</li>
+        <li><strong>Игрушки, предметы ухода</strong> (пластик, резина, металл) — погружение или протирание. Тщательно промыть водой.</li>
+        <li><strong>Медицинский инструментарий</strong> — 0,06% раствор, 20–30 мин. После — полоскание под проточной водой, сдать в ОЦС. Предстерилизационная обработка в отделениях <u>запрещена</u>.</li>
+        <li><strong>Мокрота</strong> — залить раствором: 2 объёма на 1 объём мокроты, закрыть крышкой.</li>
+        <li><strong>Биологические выделения</strong> (фекалии, кровь, ликвор, сыворотка; кроме мочи) — 2 объёма раствора на 1 объём выделений.</li>
+        <li><strong>Жидкие выделения на поверхности</strong> (кровь, плазма) — засыпать гранулами, через 5 мин собрать, поверхность протереть сухой тканью. Собранные гранулы утилизировать через 60 мин.</li>
+        <li><strong>Моча, рвотные массы, остатки пищи в ёмкостях</strong> — засыпать гранулами и перемешать (см. Таблицу 10).</li>
+        <li><strong>Уборочный инвентарь</strong> — погрузить в раствор, после выдержки прополоскать водой.</li>
+        <li><strong>Медицинские отходы</strong> (вата, перевязочный материал, одноразовые изделия) — 0,3% раствор, 120 мин, затем утилизировать.</li>
+      </ul>
+      <h3>Режимы дезинфекции по видам инфекций</h3>
+    </div>
+
+    <div data-uz>
+      <h3>Ob'ektlarni qayta ishlash usullari</h3>
+      <ul>
+        <li><strong>Sanitariya texnikasi</strong> (vanna, rakovina, hojatxona) — cho'tka yoki eritma bilan namlangan yumshoq mato. Sarfi: 150 ml/m² (artish), 150–300 ml/m² (purkash). Ayniqsa xavfli kasalliklarda — 300–500 ml/m². Suv bilan yuvish.</li>
+        <li><strong>Xona yuzalari, mebel</strong> — artish 150 ml/m² yoki purkash 300 ml/m² (gidropult) / 150 ml/m² (purkagich). Shamollatish, yuvish.</li>
+        <li><strong>Kiyim-kechak</strong> — 1 kg quruq kiyimga 5 l eritma hisobida bittama-bitta botirish, qopqoq bilan yopish. Keyin — kir yuvish va chayqalish.</li>
+        <li><strong>Idish-tovoq</strong> — to'liq botirib, qopqoq bilan yopish. Oqar suv bilan xlor hidi ketguncha yuvish.</li>
+        <li><strong>O'yinchoqlar, parvarish buyumlari</strong> (plastik, rezina, metall) — botirish yoki artish. Suv bilan yaxshilab yuvish.</li>
+        <li><strong>Tibbiy asboblar</strong> — 0,06% eritma, 20–30 daqiqa. Keyin oqar suv ostida chayqalish, OTSga topshirish. Bo'limlarda sterilizatsiyadan oldingi ishlov berish <u>taqiqlanadi</u>.</li>
+        <li><strong>Balg'am</strong> — eritma quyish: 1 qism balg'amga 2 qism eritma, qopqoq bilan yopish.</li>
+        <li><strong>Biologik ajratmalar</strong> (najaslar, qon, likvori, zardob; siydikdan tashqari) — 1 qismiga 2 qism eritma.</li>
+        <li><strong>Yuzadagi suyuq ajratmalar</strong> (qon, plazma) — granula sepish, 5 daqiqadan so'ng yig'ish, quruq mato bilan artish. Yig'ilgan granulalar 60 daqiqadan so'ng utilizatsiya qilinadi.</li>
+        <li><strong>Siydik, qusish, oziq-ovqat qoldiqlari</strong> — granula sepib aralashtiriladi (10-jadvalga qarang).</li>
+        <li><strong>Tozalash inventari</strong> — eritimga botiriladi, muddatdan so'ng suv bilan chayqalinadi.</li>
+        <li><strong>Tibbiy chiqindilar</strong> (paxta, bog'lash materiali, bir martalik buyumlar) — 0,3% eritma, 120 daqiqa, so'ng utilizatsiya.</li>
+      </ul>
+      <h3>Kasallik turlariga ko'ra dezinfeksiya rejimlari</h3>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('bact',this)">
+        <span data-ru>Бактериальные</span><span data-uz>Bakterial</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('tub',this)">
+        <span data-ru>Туберкулёз</span><span data-uz>Sil</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('fungi',this)">
+        <span data-ru>Кандидоз / Дерматофитии</span><span data-uz>Kandidos / Dermatofitiya</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('virus',this)">
+        <span data-ru>Вирусные / Covid-19</span><span data-uz>Viruslar / Covid-19</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('plague',this)">
+        <span data-ru>Чума / Холера</span><span data-uz>O'lat / Vabo</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('anthrax',this)">
+        <span data-ru>Сибирская язва</span><span data-uz>Sibirka yarasi</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('general',this)">
+        <span data-ru>Генеральная уборка</span><span data-uz>Bosh tozalash</span>
+      </button>
+    </div>
+
+    <div id="bact" class="tab-content active">
+      <h3><span data-ru>Таблица 2 — Бактериальные инфекции (кроме туберкулёза)</span><span data-uz>2-jadval — Bakterial infektsiyalar (sildan tashqari)</span></h3>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th><span data-ru>Объект</span><span data-uz>Ob'ekt</span></th>
+          <th><span data-ru>Конц., %</span><span data-uz>Konts., %</span></th>
+          <th><span data-ru>Время, мин</span><span data-uz>Vaqt, min</span></th>
+          <th><span data-ru>Способ</span><span data-uz>Usul</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span data-ru>Поверхности, мебель*</span><span data-uz>Yuzalar, mebel*</span></td><td>0,015 / 0,03</td><td>60 / 30</td><td><span data-ru>Протирание, орошение</span><span data-uz>Artish, purkash</span></td></tr>
+          <tr><td><span data-ru>Сантехника*</span><span data-uz>Sanitariya texnikasi*</span></td><td>0,03 / 0,06</td><td>120 / 60</td><td><span data-ru>Двукратное протирание/орошение с интервалом 15 мин</span><span data-uz>15 daq oraliq bilan 2 marta artish/purkash</span></td></tr>
+          <tr><td><span data-ru>Посуда (без остатков)</span><span data-uz>Idish (qoldigsiz)</span></td><td>0,015</td><td>15</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Посуда (с остатками)</span><span data-uz>Idish (qoldiq bilan)</span></td><td>0,1</td><td>120</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Посуда лабораторная</span><span data-uz>Laboratoriya idishi</span></td><td>0,1</td><td>120</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Бельё незагрязнённое</span><span data-uz>Ifloslanmagan kiyim</span></td><td>0,015</td><td>60</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Бельё загрязнённое</span><span data-uz>Ifloslangan kiyim</span></td><td>0,2</td><td>120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Предметы ухода (стекло, пластик, резина)</span><span data-uz>Parvarish buyumlari</span></td><td>0,06 / 0,1</td><td>90 / 60</td><td><span data-ru>Погружение / Протирание</span><span data-uz>Botirish / Artish</span></td></tr>
+          <tr><td><span data-ru>Медицинские изделия</span><span data-uz>Tibbiy buyumlar</span></td><td>0,1</td><td>60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Уборочный инвентарь*</span><span data-uz>Tozalash inventari*</span></td><td>0,2</td><td>120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Игрушки</span><span data-uz>O'yinchoqlar</span></td><td>0,03</td><td>60</td><td><span data-ru>Погружение, протирание</span><span data-uz>Botirish, artish</span></td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="4"><span data-ru>* — возможно добавление 0,5% моющего средства</span><span data-uz>* — 0,5% yuvish vositasi qo'shish mumkin</span></td></tr></tfoot>
+      </table></div>
+    </div>
+
+    <div id="tub" class="tab-content">
+      <h3><span data-ru>Таблица 3 — Туберкулёз</span><span data-uz>3-jadval — Sil kasalligi</span></h3>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th><span data-ru>Объект</span><span data-uz>Ob'ekt</span></th>
+          <th><span data-ru>Конц., %</span><span data-uz>Konts., %</span></th>
+          <th><span data-ru>Время, мин</span><span data-uz>Vaqt, min</span></th>
+          <th><span data-ru>Способ</span><span data-uz>Usul</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span data-ru>Поверхности, мебель*</span><span data-uz>Yuzalar, mebel*</span></td><td>0,06 / 0,1</td><td>60 / 30</td><td><span data-ru>Протирание, орошение</span><span data-uz>Artish, purkash</span></td></tr>
+          <tr><td><span data-ru>Сантехника*</span><span data-uz>Sanitariya texnikasi*</span></td><td>0,1 / 0,2</td><td>90 / 60</td><td><span data-ru>Двукратное протирание/орошение</span><span data-uz>2 marta artish/purkash</span></td></tr>
+          <tr><td><span data-ru>Посуда (без остатков)</span><span data-uz>Idish (qoldigsiz)</span></td><td>0,06</td><td>30</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Посуда (с остатками)</span><span data-uz>Idish (qoldiq bilan)</span></td><td>0,3</td><td>180</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Бельё незагрязнённое</span><span data-uz>Ifloslanmagan kiyim</span></td><td>0,06</td><td>60</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Бельё загрязнённое</span><span data-uz>Ifloslangan kiyim</span></td><td>0,3</td><td>120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Предметы ухода</span><span data-uz>Parvarish buyumlari</span></td><td>0,2 / 0,3</td><td>60 / 45</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Плевательницы (без мокроты)</span><span data-uz>Tupurish idishi (balg'amsiz)</span></td><td>0,3</td><td>120</td><td><span data-ru>Погружение с крышкой</span><span data-uz>Qopqoqli botirish</span></td></tr>
+          <tr><td><span data-ru>Мокрота (раствором)</span><span data-uz>Balg'am (eritma bilan)</span></td><td>0,3</td><td>480</td><td><span data-ru>Заливание 2:1</span><span data-uz>Quyish 2:1</span></td></tr>
+          <tr><td><span data-ru>Мокрота (гранулами)</span><span data-uz>Balg'am (granulalar bilan)</span></td><td>—</td><td>60</td><td><span data-ru>Засыпание</span><span data-uz>Sepish</span></td></tr>
+          <tr><td><span data-ru>Медицинские изделия</span><span data-uz>Tibbiy buyumlar</span></td><td>0,2</td><td>60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Уборочный инвентарь*</span><span data-uz>Tozalash inventari*</span></td><td>0,3</td><td>120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Игрушки</span><span data-uz>O'yinchoqlar</span></td><td>0,06 / 0,1</td><td>30 / 15</td><td><span data-ru>Погружение или протирание</span><span data-uz>Botirish yoki artish</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div id="fungi" class="tab-content">
+      <h3><span data-ru>Таблица 4 — Кандидозы и дерматофитии</span><span data-uz>4-jadval — Kandidos va dermatofitiyalar</span></h3>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th><span data-ru>Объект</span><span data-uz>Ob'ekt</span></th>
+          <th><span data-ru>Конц., %</span><span data-uz>Konts., %</span></th>
+          <th><span data-ru>Время (канд./дерм.), мин</span><span data-uz>Vaqt (kand./derm.), min</span></th>
+          <th><span data-ru>Способ</span><span data-uz>Usul</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span data-ru>Поверхности, мебель*</span><span data-uz>Yuzalar, mebel*</span></td><td>0,06 / 0,1</td><td>60/30 · 60/30</td><td><span data-ru>Протирание или орошение</span><span data-uz>Artish yoki purkash</span></td></tr>
+          <tr><td><span data-ru>Сантехника*</span><span data-uz>Sanitariya texnikasi*</span></td><td>0,1</td><td>60 · 120</td><td><span data-ru>Двукратное</span><span data-uz>2 marta</span></td></tr>
+          <tr><td><span data-ru>Посуда (без остатков)</span><span data-uz>Idish (qoldigsiz)</span></td><td>0,06</td><td>30 · —</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Посуда (с остатками)</span><span data-uz>Idish (qoldiq bilan)</span></td><td>0,2</td><td>120 · —</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Бельё незагрязнённое</span><span data-uz>Ifloslanmagan kiyim</span></td><td>0,06</td><td>60 · 120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Бельё загрязнённое</span><span data-uz>Ifloslangan kiyim</span></td><td>0,2</td><td>60 · 120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Предметы ухода</span><span data-uz>Parvarish buyumlari</span></td><td>0,2</td><td>30 · 60</td><td><span data-ru>Погружение или протирание</span><span data-uz>Botirish yoki artish</span></td></tr>
+          <tr><td><span data-ru>Медицинские изделия</span><span data-uz>Tibbiy buyumlar</span></td><td>0,2</td><td>30 · 60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Игрушки</span><span data-uz>O'yinchoqlar</span></td><td>0,1</td><td>30 · 60</td><td><span data-ru>Погружение или протирание</span><span data-uz>Botirish yoki artish</span></td></tr>
+          <tr><td><span data-ru>Резиновые коврики</span><span data-uz>Rezina gilamcha</span></td><td>0,1</td><td>— · 120</td><td><span data-ru>Протирание или орошение</span><span data-uz>Artish yoki purkash</span></td></tr>
+          <tr><td><span data-ru>Уборочный инвентарь</span><span data-uz>Tozalash inventari</span></td><td>0,2</td><td>60 · 120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="4"><span data-ru>* — возможно добавление 0,5% моющего средства</span><span data-uz>* — 0,5% yuvish vositasi qo'shish mumkin</span></td></tr></tfoot>
+      </table></div>
+    </div>
+
+    <div id="virus" class="tab-content">
+      <h3><span data-ru>Таблица 5/7 — Вирусные инфекции и Covid-19</span><span data-uz>5/7-jadval — Viral infektsiyalar va Covid-19</span></h3>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th><span data-ru>Объект</span><span data-uz>Ob'ekt</span></th>
+          <th><span data-ru>Конц., %</span><span data-uz>Konts., %</span></th>
+          <th><span data-ru>Время, мин</span><span data-uz>Vaqt, min</span></th>
+          <th><span data-ru>Способ</span><span data-uz>Usul</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span data-ru>Поверхности, мебель*</span><span data-uz>Yuzalar, mebel*</span></td><td>0,015 / 0,03</td><td>60 / 30</td><td><span data-ru>Протирание или орошение</span><span data-uz>Artish yoki purkash</span></td></tr>
+          <tr><td><span data-ru>Сантехника*</span><span data-uz>Sanitariya texnikasi*</span></td><td>0,03 / 0,06</td><td>120 / 60</td><td><span data-ru>Двукратное с интервалом 15 мин</span><span data-uz>15 daq oraliq bilan 2 marta</span></td></tr>
+          <tr><td><span data-ru>Посуда (без остатков)</span><span data-uz>Idish (qoldigsiz)</span></td><td>0,015</td><td>15</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Посуда (с остатками)</span><span data-uz>Idish (qoldiq bilan)</span></td><td>0,1</td><td>120</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Бельё незагрязнённое</span><span data-uz>Ifloslanmagan kiyim</span></td><td>0,015</td><td>60</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Бельё загрязнённое</span><span data-uz>Ifloslangan kiyim</span></td><td>0,2 / 0,3</td><td>120 / 60</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Медицинские изделия</span><span data-uz>Tibbiy buyumlar</span></td><td>0,06 / 0,1</td><td>90 / 60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Предметы ухода</span><span data-uz>Parvarish buyumlari</span></td><td>0,06 / 0,1</td><td>90 / 60</td><td><span data-ru>Погружение или протирание</span><span data-uz>Botirish yoki artish</span></td></tr>
+          <tr><td><span data-ru>Биовыделения (кровь, фекалии, ликвор)</span><span data-uz>Bio ajratmalar (qon, najas, likvori)</span></td><td>0,3</td><td>360</td><td><span data-ru>Заливание 2:1</span><span data-uz>Quyish 2:1</span></td></tr>
+          <tr><td><span data-ru>Игрушки</span><span data-uz>O'yinchoqlar</span></td><td>0,06</td><td>15</td><td><span data-ru>Погружение или протирание</span><span data-uz>Botirish yoki artish</span></td></tr>
+          <tr><td><span data-ru>Уборочный инвентарь</span><span data-uz>Tozalash inventari</span></td><td>0,2 / 0,3</td><td>120 / 60</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="4"><span data-ru>* — возможно добавление 0,5% моющего средства</span><span data-uz>* — 0,5% yuvish vositasi qo'shish mumkin</span></td></tr></tfoot>
+      </table></div>
+    </div>
+
+    <div id="plague" class="tab-content">
+      <h3><span data-ru>Таблица 6/8 — Чума и Холера</span><span data-uz>6/8-jadval — O'lat va Vabo</span></h3>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th><span data-ru>Объект</span><span data-uz>Ob'ekt</span></th>
+          <th><span data-ru>Конц., %</span><span data-uz>Konts., %</span></th>
+          <th><span data-ru>Время, мин</span><span data-uz>Vaqt, min</span></th>
+          <th><span data-ru>Способ</span><span data-uz>Usul</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span data-ru>Поверхности, мебель</span><span data-uz>Yuzalar, mebel</span></td><td>0,1</td><td>60</td><td><span data-ru>Орошение</span><span data-uz>Purkash</span></td></tr>
+          <tr><td><span data-ru>Сантехника</span><span data-uz>Sanitariya texnikasi</span></td><td>0,1</td><td>60</td><td><span data-ru>Орошение</span><span data-uz>Purkash</span></td></tr>
+          <tr><td><span data-ru>Посуда (без остатков)</span><span data-uz>Idish (qoldigsiz)</span></td><td>0,06</td><td>60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Посуда (с остатками)</span><span data-uz>Idish (qoldiq bilan)</span></td><td>0,2</td><td>60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Посуда лабораторная</span><span data-uz>Laboratoriya idishi</span></td><td>0,2</td><td>60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Бельё незагрязнённое</span><span data-uz>Ifloslanmagan kiyim</span></td><td>0,1</td><td>60–120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Бельё загрязнённое</span><span data-uz>Ifloslangan kiyim</span></td><td>0,2 / 0,3</td><td>60–120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Предметы ухода</span><span data-uz>Parvarish buyumlari</span></td><td>0,1 / 0,2</td><td>60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Медицинские изделия</span><span data-uz>Tibbiy buyumlar</span></td><td>0,1 / 0,2</td><td>60</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Уборочный инвентарь</span><span data-uz>Tozalash inventari</span></td><td>0,3</td><td>60</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div id="anthrax" class="tab-content">
+      <h3><span data-ru>Таблица 9 — Сибирская язва</span><span data-uz>9-jadval — Sibirka yarasi</span></h3>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th><span data-ru>Объект</span><span data-uz>Ob'ekt</span></th>
+          <th><span data-ru>Конц., %</span><span data-uz>Konts., %</span></th>
+          <th><span data-ru>Время, мин</span><span data-uz>Vaqt, min</span></th>
+          <th><span data-ru>Способ</span><span data-uz>Usul</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span data-ru>Поверхности, мебель</span><span data-uz>Yuzalar, mebel</span></td><td>3,0</td><td>120</td><td><span data-ru>Орошение</span><span data-uz>Purkash</span></td></tr>
+          <tr><td><span data-ru>Сантехника</span><span data-uz>Sanitariya texnikasi</span></td><td>3,0</td><td>120</td><td><span data-ru>Орошение</span><span data-uz>Purkash</span></td></tr>
+          <tr><td><span data-ru>Посуда (без остатков)</span><span data-uz>Idish (qoldigsiz)</span></td><td>2,0 / 1,0</td><td>90 / 120</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Посуда (с остатками)</span><span data-uz>Idish (qoldiq bilan)</span></td><td>3,0 / 2,0</td><td>90 / 120</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Бельё незагрязнённое</span><span data-uz>Ifloslanmagan kiyim</span></td><td>2,0 / 1,0</td><td>90 / 120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Бельё загрязнённое</span><span data-uz>Ifloslangan kiyim</span></td><td>3,0</td><td>120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+          <tr><td><span data-ru>Предметы ухода</span><span data-uz>Parvarish buyumlari</span></td><td>3,0</td><td>120</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Медицинские изделия</span><span data-uz>Tibbiy buyumlar</span></td><td>4,0 / 3,0</td><td>90 / 120</td><td><span data-ru>Погружение</span><span data-uz>Botirish</span></td></tr>
+          <tr><td><span data-ru>Уборочный инвентарь</span><span data-uz>Tozalash inventari</span></td><td>3,0</td><td>120</td><td><span data-ru>Замачивание</span><span data-uz>Namlash</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div id="general" class="tab-content">
+      <h3><span data-ru>Таблица 12 — Генеральная уборка в ЛПУ</span><span data-uz>12-jadval — Tibbiy muassasalarda bosh tozalash</span></h3>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th><span data-ru>Профиль ЛПУ</span><span data-uz>Muassasa profili</span></th>
+          <th><span data-ru>Конц., %</span><span data-uz>Konts., %</span></th>
+          <th><span data-ru>Время, мин</span><span data-uz>Vaqt, min</span></th>
+          <th><span data-ru>Способ</span><span data-uz>Usul</span></th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span data-ru>Соматические, хирургические, стоматологические, акушерские, гинекологические отделения, лаборатории</span><span data-uz>Somatik, jarrohlik, stomatologiya, akusherlik, ginekologiya bo'limlari, laboratoriyalar</span></td>
+            <td>0,015 / 0,03</td><td>60 / 30</td><td><span data-ru>Протирание</span><span data-uz>Artish</span></td>
+          </tr>
+          <tr>
+            <td><span data-ru>Противотуберкулёзные ЛПУ</span><span data-uz>Sil kasalligiga qarshi muassasalar</span></td>
+            <td>0,06 / 0,1</td><td>60 / 30</td><td><span data-ru>Протирание</span><span data-uz>Artish</span></td>
+          </tr>
+          <tr>
+            <td><span data-ru>Инфекционные ЛПУ</span><span data-uz>Yuqumli kasalliklar muassasalari</span></td>
+            <td colspan="3"><span data-ru>По режиму соответствующей инфекции</span><span data-uz>Tegishli infektsiya rejimiga muvofiq</span></td>
+          </tr>
+          <tr>
+            <td><span data-ru>Кожно-венерологические ЛПУ</span><span data-uz>Teri-venerologiya muassasalari</span></td>
+            <td>0,1 / 0,06</td><td>30 / 60</td><td><span data-ru>Протирание</span><span data-uz>Artish</span></td>
+          </tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- Tables 10 and 11 -->
+    <div data-ru>
+      <h3>Таблица 10 — Дезинфекция гранулами (моча, рвотные массы, остатки пищи)</h3>
+    </div>
+    <div data-uz>
+      <h3>10-jadval — Granulalar bilan dezinfeksiya (siydik, qusish, oziq-ovqat qoldiqlari)</h3>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th><span data-ru>Объект</span><span data-uz>Ob'ekt</span></th>
+        <th><span data-ru>Гранул, г на 1 л</span><span data-uz>Granula, g/1 l</span></th>
+        <th><span data-ru>Время, мин</span><span data-uz>Vaqt, min</span></th>
+        <th><span data-ru>Способ</span><span data-uz>Usul</span></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><span data-ru>Моча</span><span data-uz>Siydik</span></td><td>5</td><td>60</td>
+          <td><span data-ru>Засыпать и перемешать</span><span data-uz>Sepib aralashtiriladi</span></td>
+        </tr>
+        <tr>
+          <td><span data-ru>Фекально-мочевая смесь</span><span data-uz>Najas-siydik aralashmasi</span></td><td>50 / 100</td><td>120 / 60</td>
+          <td><span data-ru>Засыпать и перемешать</span><span data-uz>Sepib aralashtiriladi</span></td>
+        </tr>
+        <tr>
+          <td><span data-ru>Рвотные массы, остатки пищи</span><span data-uz>Qusish, oziq-ovqat qoldiqlari</span></td><td>50 / 100</td><td>120 / 60</td>
+          <td><span data-ru>Засыпать и перемешать</span><span data-uz>Sepib aralashtiriladi</span></td>
+        </tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- Section 4 -->
+  <section>
+    <h2>
+      <span data-ru>4. Меры предосторожности</span>
+      <span data-uz>4. Ehtiyot choralari</span>
+    </h2>
+    <div data-ru>
+      <div class="warn"><strong>⚠ Не допускаются к работе:</strong> лица с повышенной чувствительностью к хлору, аллергическими заболеваниями, хроническими заболеваниями лёгких и верхних дыхательных путей.</div>
+      <ul>
+        <li>Работу проводить в <strong>резиновых перчатках</strong>.</li>
+        <li>Избегать попадания средства на кожу и в глаза.</li>
+        <li>Растворы 0,015–0,06% АХ — можно работать <strong>без респиратора</strong>.</li>
+        <li>При протирании растворами ≥0,1% АХ — использовать <strong>респиратор</strong> (РУ-60М или РПГ-67, патрон марки В) и <strong>герметичные очки</strong>.</li>
+        <li>Обработку поверхностей проводить <strong>в отсутствие больных</strong>. По окончании — влажная уборка и проветривание до исчезновения запаха хлора.</li>
+        <li>Дезинфекцию способом погружения/замачивания — в <strong>проветриваемом помещении</strong>; ёмкости закрывать крышками.</li>
+        <li>Протирание 0,015% раствором можно проводить в присутствии больных.</li>
+        <li>Хранить <strong>отдельно</strong> от лекарств и пищи, в плотно закрытой упаковке, <strong>вне доступа детей</strong>.</li>
+      </ul>
+    </div>
+    <div data-uz>
+      <div class="warn"><strong>⚠ Ishga ruxsat etilmaydi:</strong> xlорга юқори сезгирлиги, аллергик касалликлари, ўпка ва юқори нафас йўлларининг сурункали касалликлари бўлган шахслар.</div>
+      <ul>
+        <li>Ishni <strong>rezina qo'lqop</strong> bilan olib borish.</li>
+        <li>Vositaning terига va ko'zга tegishiga yo'l qo'ymang.</li>
+        <li>0,015–0,06% FAX eritmalari — <strong>respiratorsiz</strong> ishlash mumkin.</li>
+        <li>≥0,1% FAX eritmalari bilan artishda — <strong>respirator</strong> (RU-60M yoki RPG-67, B markali patron) va <strong>germetik ko'zoynak</strong> ishlating.</li>
+        <li>Yuzani qayta ishlash <strong>bemorlar yo'qligida</strong> amalga oshirilsin. Tugagach — nam tozalash va xlor hidi ketguncha shamollatish.</li>
+        <li>Botirish/namlash usuli — faqat <strong>shamollatilgan xonada</strong>; idishlarni qopqoq bilan yoping.</li>
+        <li>0,015% eritma bilan artishni bemorlar mavjudligida olib borish mumkin.</li>
+        <li>Dori va oziq-ovqatdan <strong>alohida</strong>, mahkam yopilgan qadoqda, <strong>bolalar yetib bormaydigan</strong> joyda saqlang.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Section 5 -->
+  <section>
+    <h2>
+      <span data-ru>5. Первая помощь при случайном отравлении</span>
+      <span data-uz>5. Tasodifiy zaharlanishda birinchi yordam</span>
+    </h2>
+    <div data-ru>
+      <div class="danger"><strong>При раздражении дыхательных путей:</strong> вывести пострадавшего на свежий воздух, прополоскать рот и носоглотку водой, дать тёплое питьё (молоко или вода).</div>
+      <ul>
+        <li><strong>Попадание на кожу:</strong> обильно промыть водой, смазать смягчающим кремом.</li>
+        <li><strong>Попадание в глаза:</strong> обильно промыть водой, закапать 30% раствор сульфацила натрия.</li>
+        <li><strong>Попадание в желудок:</strong> дать несколько стаканов воды с 10–20 таблетками активированного угля. При необходимости — обратиться к врачу.</li>
+      </ul>
+    </div>
+    <div data-uz>
+      <div class="danger"><strong>Nafas yo'llari qo'zg'alganda:</strong> jabrlanuvchini toza havoga olib chiqing, og'iz va tomoqni suv bilan chayqating, iliq ichimlik bering (sut yoki suv).</div>
+      <ul>
+        <li><strong>Teriga tegsa:</strong> ko'p suv bilan yuvish, yumshatuvchi krem surtish.</li>
+        <li><strong>Ko'zga tegsa:</strong> ko'p suv bilan yuvish, 30% natriy sulfatsil tomizish.</li>
+        <li><strong>Oshqozonga tushsa:</strong> bir necha stakan suv bilan 10–20 dona faollashtirilgan ko'mir ichirish. Kerak bo'lsa — shifokorga murojaat qiling.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Section 6 -->
+  <section>
+    <h2>
+      <span data-ru>6. Хранение, транспортировка, упаковка</span>
+      <span data-uz>6. Saqlash, tashish, qadoqlash</span>
+    </h2>
+    <div data-ru>
+      <ul>
+        <li>Хранить в <strong>сухом, защищённом от солнца</strong> месте, вдали от нагревательных приборов, при температуре <strong>от −10°С до +40°С</strong>.</li>
+        <li>Не хранить совместно с лекарственными препаратами и пищевыми продуктами.</li>
+        <li>Гранулы и таблетки упакованы в полимерные банки 0,03–5 кг.</li>
+        <li>Транспортировка всеми видами транспорта в соответствии с действующими правилами перевозки грузов.</li>
+      </ul>
+    </div>
+    <div data-uz>
+      <ul>
+        <li><strong>Quruq, quyoshdan himoyalangan</strong> joyda, isitish moslamalaridan uzoqda, <strong>−10°C dan +40°C gacha</strong> haroratda saqlang.</li>
+        <li>Dori va oziq-ovqat mahsulotlari bilan birga saqlash taqiqlanadi.</li>
+        <li>Granula va tabletkalar 0,03–5 kg hajmli polimer idishlarda qadoqlanadi.</li>
+        <li>Barcha turdagi transport vositalarida amaldagi qoidalarga muvofiq tashish mumkin.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  ООО «NASIMED» · Республика Узбекистан · Ташкент 2026<br>
+  ИНСТРУКЦИЯ ХЛОРАКТИВ-MAKS · ГОСТ Р 58151.1-2018
+</footer>
+
+<script>
+function setLang(lang) {
+  document.body.className = lang === 'uz' ? 'uz' : '';
+  document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+  document.getElementById('btn-uz').classList.toggle('active', lang === 'uz');
+  localStorage.setItem('lang', lang);
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Restore saved language
+var saved = localStorage.getItem('lang');
+if (saved === 'uz') setLang('uz');
+</script>
+</body>
+</html>

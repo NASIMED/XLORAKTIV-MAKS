@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import zipfile; z=zipfile.ZipFile\\('ИНСТРУКЦИЯ ХЛОРАКТИВ   без шапки.docx'\\); print\\(z.read\\('word/document.xml'\\).decode\\('utf-8'\\)[:8000]\\)\")"
+    ]
+  }
+}
