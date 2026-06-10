@@ -94,10 +94,24 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+  .action-btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
   .lang-divider {
     width: 1px; height: 24px;
     background: rgba(255,255,255,0.3);
   }
+  .contact-box {
+    background: linear-gradient(135deg, #0d3b6e 0%, #1a6fb5 100%);
+    color: #fff; border-radius: 12px; padding: 18px;
+    text-align: center; margin-top: 10px;
+  }
+  .contact-box a { color: #a8d4f5; text-decoration: none; font-weight: 700; font-size: 1rem; }
+  .contact-box p { margin-bottom: 6px; opacity: 0.9; }
+
   @media print {
     header .lang-switcher, .lang-divider { display: none !important; }
     body { background: #fff; }
@@ -213,7 +227,8 @@
   <div class="lang-switcher">
     <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')" spellcheck="false">RU</button>
     <button class="lang-btn" id="btn-uz" onclick="setLang('uz')" spellcheck="false">UZ</button>
-    <div class="lang-divider"></div>
+  </div>
+  <div class="action-btns">
     <button class="save-btn" onclick="savePDF()" spellcheck="false">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 16l-5-5 1.4-1.4 2.6 2.6V4h2v8.2l2.6-2.6L17 11l-5 5zm-7 2h14v2H5v-2z"/>
@@ -691,6 +706,25 @@
         <li>Granula va tabletkalar 0,03–5 kg hajmli polimer idishlarda qadoqlanadi.</li>
         <li>Barcha turdagi transport vositalarida amaldagi qoidalarga muvofiq tashish mumkin.</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- Section 7: Contact -->
+  <section>
+    <h2>
+      <span data-ru>7. Контакты</span>
+      <span data-uz>7. Aloqa</span>
+    </h2>
+    <div class="contact-box">
+      <p><strong>«NASIMED» MCHJ</strong></p>
+      <p>
+        <a href="tel:+998947272830">+998 94-727-28-30</a><br>
+        <a href="tel:+998901684043">+998 90-168-40-43</a>
+      </p>
+      <p style="margin-top:8px;font-size:0.85rem;opacity:0.8;">
+        <span data-ru>Телефон / Telegram</span>
+        <span data-uz>Telefon / Telegram</span>
+      </p>
     </div>
   </section>
 

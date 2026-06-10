@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -c \"import zipfile; z=zipfile.ZipFile\\('ИНСТРУКЦИЯ ХЛОРАКТИВ   без шапки.docx'\\); print\\(z.read\\('word/document.xml'\\).decode\\('utf-8'\\)[:8000]\\)\")"
+      "Bash(python3 -c \"import zipfile; z=zipfile.ZipFile\\('ИНСТРУКЦИЯ ХЛОРАКТИВ   без шапки.docx'\\); print\\(z.read\\('word/document.xml'\\).decode\\('utf-8'\\)[:8000]\\)\")",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\Windows 10\\\\Desktop\\\\FENOLFTALEIN\")"
     ]
   }
 }
