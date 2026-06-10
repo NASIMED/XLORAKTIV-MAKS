@@ -20,6 +20,13 @@
     text-align: center;
     position: relative;
   }
+  header .company {
+    font-size: 1.05rem;
+    font-weight: 700;
+    opacity: 0.92;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
   header h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px; }
   header p.subtitle { font-size: 0.95rem; opacity: 0.85; }
   header .badge {
@@ -27,14 +34,53 @@
     background: rgba(255,255,255,0.18); border-radius: 20px;
     padding: 3px 14px; font-size: 0.8rem;
   }
+  .flag-img {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
 
   /* Language switcher */
   .lang-switcher {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     margin-top: 16px;
+  }
+  .save-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 30px;
+    border: 2px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .save-btn:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.7);
+  }
+  .save-btn svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
+  .lang-divider {
+    width: 1px; height: 24px;
+    background: rgba(255,255,255,0.3);
+  }
+  @media print {
+    header .lang-switcher, .lang-divider { display: none !important; }
+    body { background: #fff; }
+    section { box-shadow: none; border: 1px solid #ddd; }
+    .tab-content { display: block !important; }
+    .tabs { display: none; }
   }
   .lang-btn {
     display: flex;
@@ -133,16 +179,24 @@
 <body>
 
 <header>
+  <div class="company">«NASIMED» MCHJ</div>
   <h1>ХЛОРАКТИВ-MAKS / XLORAKTIV-MAKS</h1>
   <p class="subtitle">
     <span data-ru>Дезинфицирующее средство</span>
     <span data-uz>Dezinfeksiyalovchi vosita</span>
   </p>
-  <div class="badge">ГОСТ Р 58151.1-2018 · ООО «NASIMED» · Узбекистан, 2026</div>
+  <div class="badge">ГОСТ Р 58151.1-2018</div>
 
   <div class="lang-switcher">
     <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')" spellcheck="false">RU</button>
     <button class="lang-btn" id="btn-uz" onclick="setLang('uz')" spellcheck="false">UZ</button>
+    <div class="lang-divider"></div>
+    <button class="save-btn" onclick="savePDF()" spellcheck="false">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 16l-5-5 1.4-1.4 2.6 2.6V4h2v8.2l2.6-2.6L17 11l-5 5zm-7 2h14v2H5v-2z"/>
+      </svg>
+      Сохранить
+    </button>
   </div>
 </header>
 
@@ -618,6 +672,7 @@
   ИНСТРУКЦИЯ ХЛОРАКТИВ-MAKS · ГОСТ Р 58151.1-2018
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 function setLang(lang) {
   document.body.className = lang === 'uz' ? 'uz' : '';
@@ -631,6 +686,42 @@ function showTab(id, btn) {
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
+}
+
+function savePDF() {
+  // Show all tab contents temporarily for PDF
+  var tabs = document.querySelectorAll('.tab-content');
+  tabs.forEach(function(t){ t.style.display='block'; });
+
+  // Hide buttons/switcher from PDF
+  var switcher = document.querySelector('.lang-switcher');
+  var tabBtns = document.querySelector('.tabs');
+  switcher.style.display = 'none';
+  if(tabBtns) tabBtns.style.display = 'none';
+
+  var isUz = document.body.classList.contains('uz');
+  var fname = isUz ? 'XLORAKTIV-MAKS-instruksiya.pdf' : 'ХЛОРАКТИВ-MAKS-instruksiya.pdf';
+
+  var opt = {
+    margin: [8, 8, 8, 8],
+    filename: fname,
+    image: { type: 'jpeg', quality: 0.97 },
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  html2pdf().set(opt).from(document.body).save().then(function(){
+    // Restore everything
+    tabs.forEach(function(t){ t.style.display=''; });
+    switcher.style.display = '';
+    if(tabBtns) tabBtns.style.display = '';
+    // Re-activate only the active tab
+    var active = document.querySelector('.tab-content.active');
+    if(!active){
+      var first = document.getElementById('bact');
+      if(first) first.style.display = 'block';
+    }
+  });
 }
 
 // Restore saved language
