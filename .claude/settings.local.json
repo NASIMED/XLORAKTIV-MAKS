@@ -4,7 +4,9 @@
       "Bash(python3 -c \"import zipfile; z=zipfile.ZipFile\\('ИНСТРУКЦИЯ ХЛОРАКТИВ   без шапки.docx'\\); print\\(z.read\\('word/document.xml'\\).decode\\('utf-8'\\)[:8000]\\)\")",
       "PowerShell(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\Windows 10\\\\Desktop\\\\FENOLFTALEIN\")",
       "PowerShell(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\Windows 10\\\\Desktop\\\\app\\\\assets\")",
-      "PowerShell(pandoc \"C:\\\\Users\\\\Windows 10\\\\Desktop\\\\aqlli bola app\\\\qo'shimchalar\\\\1sinf_matematika_1000_misol.docx\" -t plain 2>&1)"
+      "PowerShell(pandoc \"C:\\\\Users\\\\Windows 10\\\\Desktop\\\\aqlli bola app\\\\qo'shimchalar\\\\1sinf_matematika_1000_misol.docx\" -t plain 2>&1)",
+      "Read(//c/Users/Windows 10/Desktop/aqlli bola app/AqlliBola-Android/**)",
+      "Bash(./gradlew compileDebugKotlin)"
     ]
   }
 }
