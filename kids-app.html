@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Aqlli Bola 🧠</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --primary: #6C63FF; --secondary: #FF6584; --success: #43D17A;
+  --warning: #FFB347; --danger: #FF6B6B; --bg: #F0F4FF; --text: #2D2D44; --muted: #8888AA;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: var(--bg); color: var(--text); min-height: 100vh;
+  overflow-x: hidden; user-select: none;
+}
+.screen { display: none; min-height: 100vh; flex-direction: column; align-items: center; padding: 20px; }
+.screen.active { display: flex; }
+
+/* WELCOME */
+#screen-welcome {
+  background: linear-gradient(160deg, #6C63FF 0%, #A78BFA 50%, #FF6584 100%);
+  justify-content: center; text-align: center; color: white;
+}
+#screen-welcome .logo { font-size: 80px; margin-bottom: 20px; animation: bounce 2s infinite; }
+#screen-welcome h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
+#screen-welcome p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 40px; }
+.stars { font-size: 28px; margin-bottom: 16px; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 32px; border-radius: 50px; border: none; font-size: 1rem;
+  font-weight: 700; cursor: pointer; transition: transform .15s, box-shadow .15s;
+}
+.btn:active { transform: scale(0.96); }
+.btn-primary { background: white; color: var(--primary); box-shadow: 0 4px 20px rgba(0,0,0,.15); }
+.btn-purple  { background: var(--primary); color: white; box-shadow: 0 4px 20px rgba(108,99,255,.4); }
+.btn-gray    { background: #E5E7EB; color: var(--text); }
+.btn-lg      { padding: 18px 40px; font-size: 1.15rem; }
+.btn-full    { width: 100%; }
+
+/* SETUP */
+#screen-setup { background: var(--bg); padding-top: 32px; }
+.setup-header { text-align: center; margin-bottom: 24px; }
+.setup-header h2 { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
+.setup-header p  { color: var(--muted); margin-top: 4px; }
+.card {
+  background: white; border-radius: 20px; padding: 20px 18px;
+  margin-bottom: 14px; width: 100%; max-width: 420px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.07);
+}
+.card-label { font-weight: 700; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; }
+
+/* SLIDER */
+.slider-wrap { position: relative; padding: 4px 0 20px; }
+.slider-val {
+  font-size: 2rem; font-weight: 900; color: var(--primary);
+  text-align: center; margin-bottom: 12px; line-height: 1;
+}
+.slider-val span { font-size: 1rem; font-weight: 600; color: var(--muted); }
+input[type=range] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 8px; border-radius: 50px;
+  background: #E5E7EB; outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--primary); cursor: pointer;
+  box-shadow: 0 2px 10px rgba(108,99,255,.5);
+  border: 3px solid white;
+}
+input[type=range]::-moz-range-thumb {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--primary); cursor: pointer;
+  box-shadow: 0 2px 10px rgba(108,99,255,.5);
+  border: 3px solid white;
+}
+.slider-marks { display: flex; justify-content: space-between; margin-top: 8px; }
+.slider-marks span { font-size: .75rem; color: var(--muted); font-weight: 600; }
+
+/* PIN */
+.pin-input {
+  width: 100%; padding: 14px; border: 2px solid #E5E7EB; border-radius: 14px;
+  font-size: 1.1rem; font-weight: 700; text-align: center; outline: none;
+  transition: border-color .2s; color: var(--text);
+}
+.pin-input:focus { border-color: var(--primary); }
+
+/* DEV MODE badge */
+.dev-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #FFF3CD; border: 2px solid #FFB347; border-radius: 12px;
+  padding: 8px 14px; font-size: .85rem; font-weight: 700; color: #92400E;
+  margin-bottom: 12px; width: 100%; max-width: 420px;
+}
+.dev-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; width: 100%; }
+.toggle-switch {
+  width: 44px; height: 24px; background: #E5E7EB; border-radius: 50px;
+  position: relative; transition: background .2s; flex-shrink: 0;
+}
+.toggle-switch.on { background: var(--primary); }
+.toggle-knob {
+  position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: white; transition: transform .2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+.toggle-switch.on .toggle-knob { transform: translateX(20px); }
+
+/* TIMER SCREEN */
+#screen-timer {
+  background: linear-gradient(160deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
+  justify-content: center; text-align: center; color: white;
+}
+.timer-circle {
+  width: 220px; height: 220px; border-radius: 50%;
+  border: 6px solid rgba(255,255,255,.15);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin: 30px auto; position: relative;
+  background: rgba(255,255,255,.08); box-shadow: 0 0 60px rgba(108,99,255,.4);
+}
+.timer-ring { position: absolute; top: -6px; left: -6px; width: calc(100% + 12px); height: calc(100% + 12px); }
+.timer-ring circle { fill: none; stroke: #A78BFA; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 1s linear; }
+.timer-min { font-size: 3.5rem; font-weight: 900; line-height: 1; }
+.timer-sec { font-size: 1.4rem; font-weight: 600; opacity: .7; }
+.timer-label { font-size: .9rem; opacity: .6; margin-top: 4px; }
+#screen-timer h3 { font-size: 1.3rem; font-weight: 700; opacity: .9; margin-bottom: 8px; }
+#screen-timer .child-name { font-size: 1rem; opacity: .6; }
+.timer-actions { display: flex; gap: 12px; margin-top: 30px; }
+
+/* LOCK SCREEN */
+#screen-lock { background: linear-gradient(160deg, #DC2626 0%, #991B1B 100%); justify-content: center; text-align: center; color: white; }
+.lock-icon { font-size: 80px; margin-bottom: 20px; animation: shake .5s ease-in-out; }
+@keyframes shake { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-10deg)} 75%{transform:rotate(10deg)} }
+#screen-lock h2 { font-size: 2rem; font-weight: 900; margin-bottom: 12px; }
+#screen-lock p { font-size: 1.1rem; opacity: .9; margin-bottom: 30px; max-width: 300px; }
+
+/* QUESTIONS SCREEN */
+#screen-questions { background: var(--bg); padding-top: 16px; }
+.q-header { width: 100%; max-width: 420px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.q-progress-bar { flex: 1; height: 8px; background: #E5E7EB; border-radius: 50px; margin: 0 12px; overflow: hidden; }
+.q-progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 50px; transition: width .4s ease; }
+.q-score-badge { display: flex; align-items: center; gap: 4px; background: white; border-radius: 50px; padding: 6px 12px; font-weight: 700; font-size: .9rem; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+.score-plus { color: var(--success); } .score-minus { color: var(--danger); }
+.q-number { font-size: .85rem; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.question-card { background: white; border-radius: 24px; padding: 28px 20px; width: 100%; max-width: 420px; box-shadow: 0 4px 24px rgba(0,0,0,.1); margin-bottom: 16px; text-align: center; }
+.q-emoji { font-size: 56px; margin-bottom: 10px; line-height: 1.2; word-break: break-word; }
+.q-text { font-size: 1.2rem; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
+.q-math { font-size: 2.1rem; font-weight: 900; color: var(--primary); margin: 8px 0; }
+.answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 420px; }
+.answer-btn {
+  background: white; border: 3px solid #E5E7EB; border-radius: 18px;
+  padding: 18px 12px; font-size: 1.3rem; font-weight: 800; cursor: pointer;
+  transition: all .2s; color: var(--text); display: flex; flex-direction: column;
+  align-items: center; gap: 4px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.answer-btn:active { transform: scale(.96); }
+.answer-btn.correct { border-color: var(--success); background: #F0FFF4; color: var(--success); }
+.answer-btn.wrong   { border-color: var(--danger);  background: #FFF5F5; color: var(--danger); }
+.answer-btn.disabled { pointer-events: none; opacity: .5; }
+.picture-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 420px; }
+.picture-btn {
+  background: white; border: 3px solid #E5E7EB; border-radius: 22px;
+  padding: 22px 12px; font-size: 3rem; cursor: pointer; transition: all .2s;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+}
+.picture-btn span { font-size: .9rem; font-weight: 700; color: var(--text); }
+.picture-btn:active { transform: scale(.94); }
+.picture-btn.correct { border-color: var(--success); background: #F0FFF4; }
+.picture-btn.wrong   { border-color: var(--danger);  background: #FFF5F5; }
+.picture-btn.disabled { pointer-events: none; }
+
+/* RESULT */
+#screen-result { background: var(--bg); justify-content: center; text-align: center; }
+.result-circle { width: 160px; height: 160px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 2.8rem; font-weight: 900; color: white; }
+.result-circle.good { background: linear-gradient(135deg, var(--success), #16A34A); box-shadow: 0 8px 30px rgba(67,209,122,.4); }
+.result-circle.okay { background: linear-gradient(135deg, var(--warning), #EA580C); box-shadow: 0 8px 30px rgba(255,179,71,.4); }
+.result-circle.bad  { background: linear-gradient(135deg, var(--danger),  #B91C1C); box-shadow: 0 8px 30px rgba(255,107,107,.4); }
+.result-sub { font-size: .85rem; font-weight: 600; opacity: .9; }
+#screen-result h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 8px; color: var(--text); }
+#screen-result .result-msg { color: var(--muted); font-size: 1rem; margin-bottom: 24px; max-width: 320px; }
+.result-stats { display: flex; gap: 12px; margin-bottom: 28px; }
+.stat-box { flex: 1; background: white; border-radius: 18px; padding: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.stat-num { font-size: 2rem; font-weight: 900; }
+.stat-label { font-size: .8rem; color: var(--muted); font-weight: 600; margin-top: 2px; }
+.earned-time { background: linear-gradient(135deg, var(--primary), #8B5CF6); color: white; border-radius: 20px; padding: 20px; margin-bottom: 24px; width: 100%; max-width: 420px; }
+.earned-time .big { font-size: 2.5rem; font-weight: 900; }
+.earned-time .label { font-size: .9rem; opacity: .85; }
+
+/* PIN MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(4px); z-index: 1000; align-items: flex-end; justify-content: center; }
+.modal-overlay.active { display: flex; }
+.modal-sheet { background: white; border-radius: 28px 28px 0 0; padding: 30px 24px 40px; width: 100%; max-width: 440px; text-align: center; animation: slideUp .3s ease; }
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.modal-sheet h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+.modal-sheet p  { color: var(--muted); margin-bottom: 20px; }
+.pin-display { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
+.pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--primary); transition: background .2s; }
+.pin-dot.filled { background: var(--primary); }
+.numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 280px; margin: 0 auto; }
+.num-btn { padding: 18px; border-radius: 16px; border: none; background: #F3F4F6; font-size: 1.4rem; font-weight: 700; cursor: pointer; transition: all .15s; color: var(--text); }
+.num-btn:active { transform: scale(.92); background: #E5E7EB; }
+.num-btn.del { background: #FEE2E2; color: var(--danger); }
+.num-btn.empty { background: transparent; pointer-events: none; }
+
+/* CONFETTI */
+.confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
+.confetti-piece { position: absolute; border-radius: 2px; animation: fall linear forwards; }
+@keyframes fall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
+.feedback-flash { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 998; opacity: 0; transition: opacity .2s; }
+.feedback-flash.show { opacity: 1; }
+.feedback-flash .flash-inner { font-size: 5rem; animation: popIn .3s ease; }
+@keyframes popIn { 0%{transform:scale(.5)} 70%{transform:scale(1.2)} 100%{transform:scale(1)} }
+.mt-8{margin-top:8px} .mt-16{margin-top:16px} .mt-24{margin-top:24px}
+.text-muted{color:var(--muted);font-size:.9rem} .w-full{width:100%;max-width:420px}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.85}}
+.pulse{animation:pulse 2s infinite}
+
+/* AGE EMOJI ROW */
+.age-emoji-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.age-emoji-big { font-size: 2.8rem; transition: all .3s; }
+.age-label-big { font-size: 2rem; font-weight: 900; color: var(--primary); }
+.age-type-tag { display: inline-block; background: var(--primary); color: white; border-radius: 20px; padding: 4px 12px; font-size: .8rem; font-weight: 700; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="confetti-container" id="confetti"></div>
+<div class="feedback-flash" id="feedback-flash"><div class="flash-inner" id="flash-emoji"></div></div>
+
+<!-- WELCOME -->
+<div class="screen active" id="screen-welcome">
+  <div class="stars">⭐ 🌟 ⭐</div>
+  <div class="logo">🧠</div>
+  <h1>Aqlli Bola</h1>
+  <p>Bolangizni o'ynating va o'qiting!</p>
+  <button class="btn btn-primary btn-lg" onclick="showScreen('screen-setup')">🚀 Boshlash</button>
+  <p class="mt-24" style="color:rgba(255,255,255,.7);font-size:.85rem;">Ota-ona uchun boshqaruv paneli</p>
+</div>
+
+<!-- SETUP -->
+<div class="screen" id="screen-setup">
+  <div class="setup-header">
+    <div style="font-size:40px;margin-bottom:8px;">⚙️</div>
+    <h2>Sozlamalar</h2>
+    <p>Bolangiz uchun o'rnatib qo'ying</p>
+  </div>
+
+  <!-- DEV MODE toggle -->
+  <div class="dev-badge w-full" onclick="toggleDev()">
+    <span>🧪</span>
+    <div class="dev-toggle" style="flex:1">
+      <div style="flex:1">
+        <div style="font-weight:700">Test rejimi</div>
+        <div style="font-size:.75rem;opacity:.7">Taymer o'tkazib, to'g'ridan savollarga o'tish</div>
+      </div>
+      <div class="toggle-switch" id="dev-toggle"><div class="toggle-knob"></div></div>
+    </div>
+  </div>
+
+  <!-- Age slider -->
+  <div class="card w-full">
+    <div class="card-label">👧 Bola yoshi</div>
+    <div class="age-emoji-row">
+      <div class="age-emoji-big" id="age-emoji">🧒</div>
+      <div>
+        <div class="age-label-big" id="age-display">7 yosh</div>
+        <div class="age-type-tag" id="age-type">Maktab o'quvchisi</div>
+      </div>
+    </div>
+    <div style="margin-top:14px">
+      <input type="range" id="age-slider" min="3" max="12" value="7" oninput="onAgeChange(this.value)">
+      <div class="slider-marks">
+        <span>3 yosh</span><span>6 yosh</span><span>9 yosh</span><span>12 yosh</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer slider -->
+  <div class="card w-full">
+    <div class="card-label">⏱️ Telefondan foydalanish vaqti</div>
+    <div class="slider-val" id="timer-display">15 <span>daqiqa</span></div>
+    <input type="range" id="timer-slider" min="5" max="60" value="15" step="5" oninput="onTimerChange(this.value)">
+    <div class="slider-marks"><span>5 daq</span><span>20 daq</span><span>40 daq</span><span>60 daq</span></div>
+  </div>
+
+  <!-- Questions slider -->
+  <div class="card w-full">
+    <div class="card-label">❓ Savollar soni</div>
+    <div class="slider-val" id="q-count-display">15 <span>ta savol</span></div>
+    <input type="range" id="q-slider" min="5" max="25" value="15" step="5" oninput="onQChange(this.value)">
+    <div class="slider-marks"><span>5 ta</span><span>10 ta</span><span>15 ta</span><span>20 ta</span><span>25 ta</span></div>
+  </div>
+
+  <!-- PIN -->
+  <div class="card w-full">
+    <div class="card-label">🔐 Ota-ona PIN kodi</div>
+    <input class="pin-input" type="number" id="pin-input" placeholder="4 raqamli PIN" maxlength="4"
+      oninput="this.value=this.value.slice(0,4)">
+    <p style="color:var(--muted);font-size:.8rem;margin-top:8px;">Bu PIN faqat ota-onaga ma'lum bo'lishi kerak</p>
+  </div>
+
+  <button class="btn btn-purple btn-lg w-full" onclick="startSession()" style="margin-bottom:12px;">▶️ Sessiyani boshlash</button>
+  <button class="btn btn-gray w-full" onclick="showScreen('screen-welcome')">← Orqaga</button>
+  <div style="height:40px"></div>
+</div>
+
+<!-- TIMER SCREEN -->
+<div class="screen" id="screen-timer">
+  <h3 id="child-greeting">Salom, kichkintoy! 👋</h3>
+  <p class="child-name" id="timer-subtitle">Telefondan foydalanish vaqti</p>
+  <div class="timer-circle" id="timer-circle">
+    <svg class="timer-ring" viewBox="0 0 232 232" id="timer-svg">
+      <circle cx="116" cy="116" r="108" id="timer-ring-circle"/>
+    </svg>
+    <div class="timer-min" id="timer-min">15</div>
+    <div class="timer-sec" id="timer-sec">:00</div>
+    <div class="timer-label">qoldi</div>
+  </div>
+  <p style="opacity:.7;font-size:.9rem;margin-bottom:16px;">Vaqt tugagach savollar boshlanadi</p>
+  <div class="timer-actions">
+    <button class="btn btn-gray" onclick="showPinModal('settings')">⚙️ Sozlama</button>
+    <button class="btn btn-primary" onclick="showPinModal('stop')">⏹ To'xtatish</button>
+  </div>
+</div>
+
+<!-- LOCK SCREEN -->
+<div class="screen" id="screen-lock">
+  <div class="lock-icon pulse">🔒</div>
+  <h2>Vaqt tugadi!</h2>
+  <p id="lock-msg">Savollarni javobini topib, yangi vaqt oching! 🎯</p>
+  <button class="btn btn-primary btn-lg" onclick="startQuestions()">🎮 Savollarni boshlash</button>
+  <p class="mt-24" style="opacity:.6;font-size:.85rem;">yoki</p>
+  <button class="btn btn-gray mt-8" onclick="showPinModal('unlock')">🔐 Ota-ona PIN bilan ochish</button>
+</div>
+
+<!-- QUESTIONS SCREEN -->
+<div class="screen" id="screen-questions">
+  <div class="q-header w-full">
+    <span class="q-number" id="q-number">1/15</span>
+    <div class="q-progress-bar"><div class="q-progress-fill" id="q-progress" style="width:0%"></div></div>
+    <div class="q-score-badge">
+      <span class="score-plus">✓<span id="q-correct">0</span></span>&nbsp;
+      <span class="score-minus">✗<span id="q-wrong">0</span></span>
+    </div>
+  </div>
+  <div style="width:100%;max-width:420px;margin-bottom:16px;">
+    <div style="height:6px;background:#E5E7EB;border-radius:50px;overflow:hidden;">
+      <div id="q-timer-bar" style="height:100%;background:linear-gradient(90deg,#43D17A,#FFB347,#FF6B6B);border-radius:50px;width:100%;transition:width .5s linear;"></div>
+    </div>
+  </div>
+  <div class="question-card w-full" id="question-card">
+    <div class="q-emoji" id="q-emoji">🤔</div>
+    <div class="q-text" id="q-text">Savol yuklanmoqda...</div>
+    <div class="q-math" id="q-math" style="display:none"></div>
+  </div>
+  <div class="answers-grid" id="answers-grid"></div>
+  <div class="picture-grid" id="picture-grid" style="display:none"></div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="screen" id="screen-result">
+  <div class="result-circle" id="result-circle">
+    <div id="result-icon">🌟</div>
+    <div class="result-sub" id="result-fraction"></div>
+  </div>
+  <h2 id="result-title">Zo'r!</h2>
+  <p class="result-msg" id="result-msg"></p>
+  <div class="result-stats w-full">
+    <div class="stat-box"><div class="stat-num" style="color:var(--success)" id="res-correct">0</div><div class="stat-label">✅ To'g'ri</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--danger)"  id="res-wrong">0</div><div class="stat-label">❌ Noto'g'ri</div></div>
+  </div>
+  <div class="earned-time w-full">
+    <div class="label">Qo'shilgan vaqt ⏱️</div>
+    <div class="big" id="earned-mins">+0 daqiqa</div>
+    <div class="label" id="earned-sub">Endi shu qadar o'ynashingiz mumkin!</div>
+  </div>
+  <button class="btn btn-purple btn-lg w-full" id="result-btn" onclick="continueAfterResult()">▶️ Davom etish</button>
+</div>
+
+<!-- PIN MODAL -->
+<div class="modal-overlay" id="pin-modal">
+  <div class="modal-sheet">
+    <h3>🔐 Ota-ona PIN</h3>
+    <p id="pin-modal-msg">PIN kodini kiriting</p>
+    <div class="pin-display" id="pin-display">
+      <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+    </div>
+    <div class="numpad">
+      <button class="num-btn" onclick="pinKey('1')">1</button>
+      <button class="num-btn" onclick="pinKey('2')">2</button>
+      <button class="num-btn" onclick="pinKey('3')">3</button>
+      <button class="num-btn" onclick="pinKey('4')">4</button>
+      <button class="num-btn" onclick="pinKey('5')">5</button>
+      <button class="num-btn" onclick="pinKey('6')">6</button>
+      <button class="num-btn" onclick="pinKey('7')">7</button>
+      <button class="num-btn" onclick="pinKey('8')">8</button>
+      <button class="num-btn" onclick="pinKey('9')">9</button>
+      <button class="num-btn empty"></button>
+      <button class="num-btn" onclick="pinKey('0')">0</button>
+      <button class="num-btn del" onclick="pinDel()">⌫</button>
+    </div>
+    <button class="btn btn-gray w-full mt-16" onclick="closePinModal()" style="max-width:280px;">Bekor qilish</button>
+  </div>
+</div>
+
+<script>
+// ===== STATE =====
+const state = {
+  age: 7, timerMinutes: 15, questionCount: 15,
+  pin: '1234', remainingSeconds: 0,
+  timerInterval: null, pinAction: null, pinBuffer: '',
+  currentQuestion: null, questionIndex: 0, questions: [],
+  correctCount: 0, wrongCount: 0,
+  questionTimerInterval: null, questionTimeLeft: 20,
+  earnedMinutes: 0, devMode: false,
+};
+
+// ===== SCREENS =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ===== DEV MODE =====
+function toggleDev() {
+  state.devMode = !state.devMode;
+  const t = document.getElementById('dev-toggle');
+  t.classList.toggle('on', state.devMode);
+}
+
+// ===== SLIDERS =====
+const AGE_EMOJIS = {
+  3:'🐣', 4:'🐥', 5:'🐤', 6:'🧒', 7:'🧒', 8:'🧒',
+  9:'👦', 10:'👦', 11:'👧', 12:'👧'
+};
+const AGE_TYPES = {
+  3:'Bog\'cha (3 yosh)', 4:'Bog\'cha (4 yosh)', 5:'Bog\'cha (5 yosh)',
+  6:'1-sinf', 7:'2-sinf', 8:'3-sinf', 9:'4-sinf',
+  10:'5-sinf', 11:'6-sinf', 12:'7-sinf'
+};
+
+function onAgeChange(v) {
+  v = parseInt(v);
+  state.age = v;
+  document.getElementById('age-display').textContent = v + ' yosh';
+  document.getElementById('age-emoji').textContent = AGE_EMOJIS[v] || '🧒';
+  document.getElementById('age-type').textContent = AGE_TYPES[v] || '';
+  // Update question time limit based on age
+  state.questionTimeSeconds = v <= 5 ? 30 : v <= 8 ? 25 : 20;
+}
+
+function onTimerChange(v) {
+  state.timerMinutes = parseInt(v);
+  document.getElementById('timer-display').innerHTML = v + ' <span>daqiqa</span>';
+}
+
+function onQChange(v) {
+  state.questionCount = parseInt(v);
+  document.getElementById('q-count-display').innerHTML = v + ' <span>ta savol</span>';
+}
+
+// ===== START SESSION =====
+function startSession() {
+  const pinVal = document.getElementById('pin-input').value.trim();
+  if (pinVal.length !== 4 || isNaN(pinVal)) {
+    alert('PIN kodi 4 ta raqamdan iborat bo\'lishi kerak!');
+    return;
+  }
+  state.pin = pinVal;
+  state.questionTimeSeconds = state.age <= 5 ? 30 : state.age <= 8 ? 25 : 20;
+
+  if (state.devMode) {
+    // Skip timer, go straight to questions
+    showLockScreen();
+    return;
+  }
+
+  state.remainingSeconds = state.timerMinutes * 60;
+  document.getElementById('child-greeting').textContent = state.age <= 5 ? 'Salom, kichkintoy! 🐣' : 'Salom, yulduzcha! ⭐';
+  document.getElementById('timer-subtitle').textContent = `${state.timerMinutes} daqiqa vaqting bor`;
+  showScreen('screen-timer');
+  startMainTimer();
+}
+
+// ===== MAIN TIMER =====
+function startMainTimer() {
+  clearInterval(state.timerInterval);
+  updateTimerDisplay();
+  const total = state.timerMinutes * 60;
+  const circumference = 2 * Math.PI * 108;
+  const ring = document.getElementById('timer-ring-circle');
+  ring.style.strokeDasharray = circumference;
+  ring.style.strokeDashoffset = 0;
+
+  state.timerInterval = setInterval(() => {
+    state.remainingSeconds--;
+    updateTimerDisplay();
+    const progress = state.remainingSeconds / total;
+    ring.style.strokeDashoffset = circumference * (1 - progress);
+    if (state.remainingSeconds <= 0) {
+      clearInterval(state.timerInterval);
+      showLockScreen();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(state.remainingSeconds / 60);
+  const s = state.remainingSeconds % 60;
+  document.getElementById('timer-min').textContent = m;
+  document.getElementById('timer-sec').textContent = ':' + String(s).padStart(2,'0');
+}
+
+function showLockScreen() {
+  document.getElementById('lock-msg').textContent =
+    state.age <= 5
+      ? 'Rasmlarni topib, yangi vaqt oching! 🎨'
+      : 'Savollarni javobini topib, yangi vaqt oching! 🎯';
+  showScreen('screen-lock');
+}
+
+// ===== QUESTION GENERATION =====
+function generateQuestions() {
+  const qs = [];
+  const isYoung = state.age <= 5;
+  const count = state.questionCount;
+  if (isYoung) {
+    const templates = [makePicCountQ, makePicColorQ, makePicShapeQ, makePicAddQ, makePicAnimalQ];
+    for (let i = 0; i < count; i++) qs.push(templates[i % templates.length]());
+  } else {
+    const diff = state.age <= 7 ? 'easy' : state.age <= 9 ? 'medium' : 'hard';
+    for (let i = 0; i < count; i++) qs.push(generateMathQ(diff));
+  }
+  return qs;
+}
+
+// ---- Young kid questions ----
+function makePicCountQ() {
+  const items = ['🍎','🍊','🍋','🍇','🍓','🐱','🐶','⭐','🌸','🦋','🐸','🐧'];
+  const em = items[Math.floor(Math.random()*items.length)];
+  const n = Math.floor(Math.random()*4)+1;
+  const w = makeWrongNums(n, 3, 1, 6);
+  return {
+    emoji: em.repeat(n), text: 'Nechta? / Сколько?', math: '',
+    answers: shuffle([{label:n,value:n},{...w[0]},{...w[1]},{...w[2]}].map(x=>({label:x.label??x,value:x.value??x,emoji:(x.label??x)+''}))),
+    correct: n, mode: 'picture',
+  };
+}
+function makePicColorQ() {
+  const colors = [
+    {name:'Qizil',emoji:'🔴',key:'red'},{name:"Ko'k",emoji:'🔵',key:'blue'},
+    {name:'Yashil',emoji:'🟢',key:'green'},{name:'Sariq',emoji:'🟡',key:'yellow'},
+    {name:'Binafsha',emoji:'🟣',key:'purple'},{name:"To'q sariq",emoji:'🟠',key:'orange'},
+  ];
+  const p = colors[Math.floor(Math.random()*colors.length)];
+  const ws = shuffle(colors.filter(c=>c.key!==p.key)).slice(0,3);
+  return {
+    emoji: p.emoji, text: 'Qanday rang? / Какой цвет?', math: '',
+    answers: shuffle([p,...ws].map(c=>({label:c.name+' '+c.emoji, value:c.key, emoji:c.emoji}))),
+    correct: p.key, mode: 'picture',
+  };
+}
+function makePicShapeQ() {
+  const shapes = [
+    {name:'Doira',emoji:'⭕',key:'circle'},{name:'Kvadrat',emoji:'🟥',key:'square'},
+    {name:'Uchburchak',emoji:'🔺',key:'triangle'},{name:'Yulduz',emoji:'⭐',key:'star'},
+    {name:'Yurak',emoji:'❤️',key:'heart'},
+  ];
+  const p = shapes[Math.floor(Math.random()*shapes.length)];
+  const ws = shuffle(shapes.filter(s=>s.key!==p.key)).slice(0,3);
+  return {
+    emoji: p.emoji, text: 'Qanday shakl?', math: '',
+    answers: shuffle([p,...ws].map(s=>({label:s.name+' '+s.emoji, value:s.key, emoji:s.emoji}))),
+    correct: p.key, mode: 'picture',
+  };
+}
+function makePicAddQ() {
+  const a = Math.floor(Math.random()*3)+1, b = Math.floor(Math.random()*3)+1;
+  const ans = a + b;
+  const em = ['🍎','🐱','⭐','🌸','🎈'][Math.floor(Math.random()*5)];
+  const w = makeWrongNums(ans, 3, 1, 9);
+  return {
+    emoji: em.repeat(a)+' + '+em.repeat(b), text: 'Hammasi nechta?', math: `${a} + ${b} = ?`,
+    answers: shuffle([ans,...w].map(v=>({label:v,value:v,emoji:v+''}))),
+    correct: ans, mode: 'picture',
+  };
+}
+function makePicAnimalQ() {
+  const pairs = [
+    {q:'🐱 nima?',a:'Mushuk',e:'🐱',w:['It 🐶','Tovuq 🐔','Baliq 🐟']},
+    {q:'🐶 nima?',a:'It',e:'🐶',w:['Mushuk 🐱','Ot 🐴','Qush 🐦']},
+    {q:'🐸 nima?',a:'Baqa',e:'🐸',w:['Toshbaqa 🐢','Kaltakesak 🦎','Ilon 🐍']},
+    {q:'🦁 nima?',a:'Sher',e:'🦁',w:['Yo\'lbars 🐯','Fil 🐘','Ot 🐴']},
+    {q:'🐘 nima?',a:'Fil',e:'🐘',w:['Begemot 🦛','Karkidon 🦏','Jirafa 🦒']},
+    {q:'🦋 nima?',a:'Kapalak',e:'🦋',w:['Chivin 🦟','Ari 🐝','Qo\'ng\'iz 🪲']},
+  ];
+  const p = pairs[Math.floor(Math.random()*pairs.length)];
+  return {
+    emoji: p.e, text: p.q, math: '',
+    answers: shuffle([{label:p.a,value:p.a,emoji:p.e}, ...p.w.map(w=>({label:w,value:w,emoji:w.split(' ')[1]||'❓'}))]),
+    correct: p.a, mode: 'picture',
+  };
+}
+
+function makeWrongNums(correct, count, min, max) {
+  const s = new Set();
+  while(s.size < count) {
+    const n = Math.floor(Math.random()*(max-min+1))+min;
+    if(n !== correct) s.add(n);
+  }
+  return [...s];
+}
+
+// ---- Math questions (6-12) ----
+function generateMathQ(diff) {
+  const pools = {
+    easy:   ['add','sub','compare','seq','missing_add'],
+    medium: ['add','sub','mul','div','seq','missing'],
+    hard:   ['mul','div','seq','missing','power','modulo'],
+  };
+  const type = pools[diff][Math.floor(Math.random()*pools[diff].length)];
+
+  if (type === 'add') {
+    const max = diff==='easy'?20:99;
+    const a = rnd(1,max), b = rnd(1,max), ans = a+b;
+    return mkQ('➕','Hisoblang:',`${a} + ${b} = ?`, ans, diff);
+  }
+  if (type === 'sub') {
+    const max = diff==='easy'?20:99;
+    const b = rnd(1,max), a = b+rnd(1,max), ans = a-b;
+    return mkQ('➖','Hisoblang:',`${a} − ${b} = ?`, ans, diff);
+  }
+  if (type === 'mul') {
+    const max = diff==='medium'?10:15;
+    const a = rnd(2,max), b = rnd(2,max), ans = a*b;
+    return mkQ('✖️','Hisoblang:',`${a} × ${b} = ?`, ans, diff);
+  }
+  if (type === 'div') {
+    const b = rnd(2,10), ans = rnd(2,10), a = b*ans;
+    return mkQ('➗','Hisoblang:',`${a} ÷ ${b} = ?`, ans, diff);
+  }
+  if (type === 'compare') {
+    const a = rnd(1,50), b = rnd(1,50);
+    const ans = a>b?'>':a<b?'<':'=';
+    return {
+      emoji:'⚖️', text:`${a}  ___  ${b}`, math:'Belgini toping:', correct:ans, mode:'math',
+      answers: shuffle(['>','<','=','≠'].map(v=>({label:v,value:v,emoji:v}))),
+    };
+  }
+  if (type === 'seq') {
+    const start = rnd(1,10), step = rnd(1,5);
+    const seq = [0,1,2,3].map(i=>start+i*step);
+    const ans = start+4*step;
+    return mkQ('🔢','Keyingi raqam nima?',seq.join(', ')+', ?', ans, diff, step);
+  }
+  if (type === 'missing_add') {
+    const b = rnd(1,10), ans = rnd(1,10), a = ans+b;
+    return mkQ('❓','Bo\'sh joyni toping:',Math.random()>.5?`? + ${b} = ${a}`:`${ans} + ? = ${a}`, Math.random()>.5?ans:b, diff);
+  }
+  if (type === 'missing') {
+    const b = rnd(2,9), ans = rnd(2,9), a = b*ans;
+    return mkQ('❓','Bo\'sh joyni toping:',Math.random()>.5?`? × ${b} = ${a}`:`${ans} × ? = ${a}`, Math.random()>.5?ans:b, diff);
+  }
+  if (type === 'power') {
+    const base = rnd(2,6), exp = rnd(2,3), ans = Math.pow(base,exp);
+    return mkQ('⚡','Hisoblang:',`${base}${exp===2?'²':'³'} = ?`, ans, diff);
+  }
+  if (type === 'modulo') {
+    const b = rnd(2,9), a = rnd(b+1,50), ans = a%b;
+    return mkQ('🔄','Qoldiqni toping:',`${a} mod ${b} = ?`, ans, diff);
+  }
+}
+
+function mkQ(emoji, text, math, correct, diff, step=null) {
+  return { emoji, text, math, correct, mode:'math', answers: genWrong(correct, 4, step) };
+}
+
+function genWrong(correct, count, step=null) {
+  const s = new Set([correct]);
+  let tries = 0;
+  while(s.size < count && tries < 200) {
+    tries++;
+    let offset;
+    if(step) { offset = rnd(1,4)*step*(Math.random()>.5?1:-1); }
+    else { const r = Math.max(3, Math.floor(Math.abs(correct)*.3+2)); offset = rnd(-r,r) || 1; }
+    const w = correct + offset;
+    if(w > 0 && w !== correct) s.add(w);
+  }
+  return shuffle([...s]).map(v=>({label:v, value:v, emoji:v+''}));
+}
+
+function rnd(a,b) { return Math.floor(Math.random()*(b-a+1))+a; }
+function shuffle(arr) {
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+// ===== QUESTIONS SCREEN =====
+function startQuestions() {
+  state.questions = generateQuestions();
+  state.questionIndex = 0;
+  state.correctCount = 0;
+  state.wrongCount = 0;
+  showScreen('screen-questions');
+  showQuestion();
+}
+
+function showQuestion() {
+  if (state.questionIndex >= state.questions.length) { showResult(); return; }
+  const q = state.questions[state.questionIndex];
+  state.currentQuestion = q;
+
+  document.getElementById('q-number').textContent = `${state.questionIndex+1}/${state.questions.length}`;
+  document.getElementById('q-progress').style.width = `${(state.questionIndex/state.questions.length)*100}%`;
+  document.getElementById('q-correct').textContent = state.correctCount;
+  document.getElementById('q-wrong').textContent = state.wrongCount;
+  document.getElementById('q-emoji').textContent = q.emoji;
+  document.getElementById('q-text').textContent = q.text;
+  const mathEl = document.getElementById('q-math');
+  if(q.math){ mathEl.textContent=q.math; mathEl.style.display='block'; }
+  else { mathEl.style.display='none'; }
+
+  if(q.mode==='picture'){
+    document.getElementById('answers-grid').style.display='none';
+    buildPicAnswers(q);
+  } else {
+    document.getElementById('picture-grid').style.display='none';
+    buildMathAnswers(q);
+  }
+
+  const qTime = state.questionTimeSeconds || 20;
+  state.questionTimeLeft = qTime;
+  document.getElementById('q-timer-bar').style.width='100%';
+  clearInterval(state.questionTimerInterval);
+  state.questionTimerInterval = setInterval(()=>{
+    state.questionTimeLeft--;
+    document.getElementById('q-timer-bar').style.width=(state.questionTimeLeft/qTime*100)+'%';
+    if(state.questionTimeLeft<=0){ clearInterval(state.questionTimerInterval); handleAnswer(null,null); }
+  },1000);
+}
+
+function buildMathAnswers(q) {
+  const grid = document.getElementById('answers-grid');
+  grid.style.display='grid'; grid.innerHTML='';
+  q.answers.slice(0,4).forEach(ans=>{
+    const btn=document.createElement('button');
+    btn.className='answer-btn';
+    btn.innerHTML=`<span>${ans.label}</span>`;
+    btn.onclick=()=>handleAnswer(ans.value,btn);
+    grid.appendChild(btn);
+  });
+}
+function buildPicAnswers(q) {
+  const grid = document.getElementById('picture-grid');
+  grid.style.display='grid'; grid.innerHTML='';
+  q.answers.slice(0,4).forEach(ans=>{
+    const btn=document.createElement('button');
+    btn.className='picture-btn';
+    btn.innerHTML=`${ans.emoji}<span>${ans.label}</span>`;
+    btn.onclick=()=>handleAnswer(ans.value,btn);
+    grid.appendChild(btn);
+  });
+}
+
+function handleAnswer(value, clickedBtn) {
+  clearInterval(state.questionTimerInterval);
+  document.getElementById('q-timer-bar').style.width='0%';
+  const isCorrect = value!==null && String(value)===String(state.currentQuestion.correct);
+  const allBtns = [...document.querySelectorAll('.answer-btn, .picture-btn')];
+
+  if(value===null){ state.wrongCount++; flashFeedback('⏰'); }
+  else if(isCorrect){ state.correctCount++; clickedBtn.classList.add('correct'); flashFeedback('✅'); spawnConfetti(); }
+  else {
+    state.wrongCount++; clickedBtn.classList.add('wrong'); flashFeedback('❌');
+    allBtns.forEach(b=>{
+      const lbl = b.querySelector('span')?.textContent ?? b.textContent.trim();
+      if(String(lbl)===String(state.currentQuestion.correct)) b.classList.add('correct');
+    });
+  }
+  allBtns.forEach(b=>b.classList.add('disabled'));
+  setTimeout(()=>{ state.questionIndex++; showQuestion(); }, 900);
+}
+
+// ===== RESULT =====
+function showResult() {
+  const correct = state.correctCount, wrong = state.wrongCount;
+  const total = state.questions.length;
+  const earned = Math.max(0, correct - wrong);
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent = wrong;
+  document.getElementById('result-fraction').textContent = `${correct}/${total}`;
+
+  const circle = document.getElementById('result-circle');
+  circle.className='result-circle';
+  if(correct>=total*.7){
+    circle.classList.add('good');
+    document.getElementById('result-icon').textContent='🌟';
+    document.getElementById('result-title').textContent='AJOYIB! 🎉';
+    document.getElementById('result-msg').textContent='Siz juda aqlli ekansiz! Shunday davom eting!';
+    spawnConfetti(80);
+  } else if(correct>=total*.4){
+    circle.classList.add('okay');
+    document.getElementById('result-icon').textContent='😊';
+    document.getElementById('result-title').textContent='Yaxshi! 👍';
+    document.getElementById('result-msg').textContent='Yana bir oz o\'rganib, keyingisini yaxshiroq qiling!';
+  } else {
+    circle.classList.add('bad');
+    document.getElementById('result-icon').textContent='💪';
+    document.getElementById('result-title').textContent='Kuchlanib ko\'ring!';
+    document.getElementById('result-msg').textContent='Har doimgidan ko\'proq urinib ko\'ring, siz uddalay olasiz!';
+  }
+
+  if(earned>0){
+    document.getElementById('earned-mins').textContent=`+${earned} daqiqa`;
+    document.getElementById('earned-sub').textContent=`Endi ${earned} daqiqa o\'ynashingiz mumkin!`;
+    document.getElementById('result-btn').textContent=`▶️ ${earned} daqiqa o\'ynash`;
+  } else {
+    document.getElementById('earned-mins').textContent='0 daqiqa';
+    document.getElementById('earned-sub').textContent='Keyingi safar ko\'proq to\'g\'ri javob bering!';
+    document.getElementById('result-btn').textContent='🔄 Qayta urinish';
+  }
+  state.earnedMinutes = earned;
+  showScreen('screen-result');
+}
+
+function continueAfterResult() {
+  if(state.earnedMinutes>0){
+    state.remainingSeconds = state.earnedMinutes*60;
+    document.getElementById('timer-subtitle').textContent=`${state.earnedMinutes} daqiqa vaqting bor`;
+    showScreen('screen-timer');
+    startMainTimer();
+  } else {
+    startQuestions();
+  }
+}
+
+// ===== PIN MODAL =====
+function showPinModal(action) {
+  state.pinAction=action; state.pinBuffer='';
+  updatePinDisplay();
+  const msgs={unlock:'Telefonni ochish uchun PIN kiriting',stop:'Sessiyani to\'xtatish uchun PIN kiriting',settings:'Sozlamalarga kirish uchun PIN kiriting'};
+  document.getElementById('pin-modal-msg').textContent=msgs[action]||'PIN kiriting';
+  document.getElementById('pin-modal').classList.add('active');
+}
+function closePinModal(){ document.getElementById('pin-modal').classList.remove('active'); state.pinBuffer=''; updatePinDisplay(); }
+function pinKey(k){ if(state.pinBuffer.length>=4)return; state.pinBuffer+=k; updatePinDisplay(); if(state.pinBuffer.length===4)setTimeout(checkPin,100); }
+function pinDel(){ state.pinBuffer=state.pinBuffer.slice(0,-1); updatePinDisplay(); }
+function updatePinDisplay(){ for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.toggle('filled',i<state.pinBuffer.length); }
+function checkPin(){
+  if(state.pinBuffer===state.pin){
+    closePinModal(); clearInterval(state.timerInterval); clearInterval(state.questionTimerInterval);
+    showScreen('screen-setup');
+  } else {
+    const d=document.getElementById('pin-display');
+    d.style.animation='shake .3s ease';
+    setTimeout(()=>d.style.animation='',400);
+    state.pinBuffer=''; updatePinDisplay();
+  }
+}
+
+// ===== CONFETTI =====
+function spawnConfetti(count=30){
+  const container=document.getElementById('confetti');
+  const colors=['#6C63FF','#FF6584','#43D17A','#FFB347','#FF6B6B','#A78BFA'];
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    p.style.cssText=`left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};`;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(),4000);
+  }
+}
+function flashFeedback(emoji){
+  const el=document.getElementById('feedback-flash');
+  document.getElementById('flash-emoji').textContent=emoji;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),700);
+}
+
+// Init
+onAgeChange(7);
+</script>
+</body>
+</html>
