@@ -6,7 +6,12 @@
       "PowerShell(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\Windows 10\\\\Desktop\\\\app\\\\assets\")",
       "PowerShell(pandoc \"C:\\\\Users\\\\Windows 10\\\\Desktop\\\\aqlli bola app\\\\qo'shimchalar\\\\1sinf_matematika_1000_misol.docx\" -t plain 2>&1)",
       "Read(//c/Users/Windows 10/Desktop/aqlli bola app/AqlliBola-Android/**)",
-      "Bash(./gradlew compileDebugKotlin)"
+      "Bash(./gradlew compileDebugKotlin)",
+      "mcp__visualize__read_me",
+      "Bash(git -C \"C:/Users/Windows 10/Desktop/server\" log --oneline -5)",
+      "Bash(flutter --version)",
+      "Bash(dart --version)",
+      "PowerShell($f = Get-Command flutter -ErrorAction SilentlyContinue; if \\($f\\) { \"flutter: \" + $f.Source } else { \"flutter NOT found\" }; $d = Get-Command dart -ErrorAction SilentlyContinue; if \\($d\\) { \"dart: \" + $d.Source } else { \"dart NOT found\" })"
     ]
   }
 }
